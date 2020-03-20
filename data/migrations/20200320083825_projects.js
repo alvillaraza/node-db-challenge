@@ -47,12 +47,32 @@ exports.up = function(knex) {
         .inTable("projects")
         .onDelete("RESTRICT")
         .onUpdate("CASCADE");
+    })
+    .createTable("projectResource", tbl => {
+      tbl.increments();
+
+      tbl
+        .integer("resource_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("resource")
+        .onDelete("CASCADE");
+
+      tbl
+        .integer("project_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("projects")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
     });
 };
 
-exports.down = function (knex) {
+exports.down = function(knex) {
   return knex.schema
-    .dropTableIfExists('resource')
-    .dropTableIfExists('tasks')
-    .dropTableIfExists('projects');
+    .dropTableIfExists("resource")
+    .dropTableIfExists("tasks")
+    .dropTableIfExists("projects");
 };
