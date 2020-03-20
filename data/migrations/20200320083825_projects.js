@@ -5,17 +5,17 @@ exports.up = function(knex) {
 
       tbl.string("name", 255).notNullable();
 
-      tbl.string("description");
+      tbl.string("proj_desc");
 
       tbl
         .boolean("completed")
         .notNullable()
-        .defaultTo("false");
+        .defaultTo(false);
     })
     .createTable("tasks", tbl => {
       tbl.increments();
 
-      tbl.string("desc").notNullable();
+      tbl.string("task_desc").notNullable();
 
       tbl.string("notes");
 
@@ -41,10 +41,10 @@ exports.up = function(knex) {
       tbl.string("desc");
 
       tbl
-        .integer("task_id", 255)
+        .integer("project_id", 255)
         .unsigned()
         .references("id")
-        .inTable("tasks")
+        .inTable("projects")
         .onDelete("RESTRICT")
         .onUpdate("CASCADE");
     });

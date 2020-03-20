@@ -30,13 +30,16 @@ router.get('/resources', (req, res) => {
 
 //  adding projects
 router.post('/', (req, res) => {
-  const projectData = req.body;
-  
-  Projects.addProject(projectData)
-    .then(project => {
-      res.status(201).json(project);
-    })
+  // const projectData = req.body;
+  // var projectDatatemp;
+
+  Projects.addProject(req.body)
+  .then(project => {
+    res.status(201).json(project);
+  })
     .catch(err => {
+      // projectDatatemp = projectData;
+    // console.log(projectDatatemp)
       res.status(500).json({ message: 'Failed to create new project' })
     });
 });
@@ -45,7 +48,7 @@ router.post('/', (req, res) => {
 router.get('/', (req, res) => {
   Projects.findProject()
     .then(project => {
-      res.status(201).json(resource);
+      res.status(201).json(project);
     })
     .catch(err => {
     res.status(500).json({message: 'Failed to get project'})
@@ -53,7 +56,7 @@ router.get('/', (req, res) => {
 })
 
 //  adding tasks
-router.post('/:id/task', (req, res) => {
+router.post('/:id/tasks', (req, res) => {
   const taskData = req.body;
   const { id } = req.params;
   const obj = {
@@ -80,5 +83,21 @@ router.post('/:id/task', (req, res) => {
   })
 })
 //  retrieving a list of tasks. The list of tasks should include the project name and project description.
+
+router.get('/:id/tasks', (req, res) => {
+  const { id } = req.params;
+
+  Projects.findTasks(id)
+    .then(tasks => {
+      if (tasks.length) {
+        res.status(200).json(tasks);
+      } else {
+        res.status(404).json({message: 'Could not find task for given project'})
+    }
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Failed to get tasks' });
+  })
+})
 
 module.exports = router;

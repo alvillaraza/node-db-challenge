@@ -49,8 +49,8 @@ function addTask(taskData) {
 // retrieving a list of tasks. The list of tasks should include the project name and project description
 function findTasks(id) {
   return db('tasks')
-    .select('p.name', 'p.description', 't.description')
+    .select('p.name', 'p.proj_desc', 't.task_desc')
     .from('projects as p')
     .join('tasks as t', 'p.id', '=', 't.project_id')
-    .where({ project_id: id });
+    // .where({ project_id: id });
 }
