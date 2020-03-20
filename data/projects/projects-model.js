@@ -1,35 +1,48 @@
-const db = require("../data/db-config.js");
+const db = require("../db-config");
 
 module.exports = {
-  find,
-  add,
-  findTasks
+  addResource,
+  findResource,
+  findProject,
+  addProject,
+  addTask,
+  findTasks,
+  findById
+
 };
 
 
 
 // adding resources
-function add(resourceData) {
+function addResource(resourceData) {
   return db('resource').insert(resourceData);
 }
 
 // retrieving a list of resources
-function find() {
+function findResource() {
   return db('resource');
 }
 
 // adding projects
-function add(projectData) {
+function addProject(projectData) {
   return db('projects').insert(projectData);
 }
 
 // retrieving a list of projects
-function find() {
+function findProject() {
   return db('projects');
 }
 
+//find projects by id
+function findById(id) {
+  return db("projects")
+    .where({ id })
+    .first();
+}
+
+
 // adding tasks
-function add(taskData) {
+function addTask(taskData) {
   return db('tasks').insert(taskData);
 }
 
