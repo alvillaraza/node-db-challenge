@@ -30,7 +30,7 @@ function find() {
 
 // adding tasks
 function add(taskData) {
-  return db('tasks');
+  return db('tasks').insert(taskData);
 }
 
 // retrieving a list of tasks. The list of tasks should include the project name and project description
